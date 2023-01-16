@@ -13,7 +13,7 @@ namespace PIZZA.Models
 
         public string Slug { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Musisz podać cenę produktu")]
