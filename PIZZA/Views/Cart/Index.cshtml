@@ -1,0 +1,48 @@
+﻿@model CartViewModel
+
+@{
+	ViewData["Title"] = "Twój koszyk";
+}
+
+
+
+@if(Model.CartItems.Count>0)
+{
+	<h1 class="text-center">Twój koszyk: </h1>
+	<table class="table">
+		<tr>
+			<th>Produkt</th>
+			<th>Ilość</th>
+			<th></th>
+			<th>Cena</th>
+			<th>Suma</th>
+		</tr>
+		@foreach(var item in Model.CartItems)
+		{
+			<tr>
+				<td>@item.ProductName</td>
+				<td>@item.Quantity</td>
+				<td>
+					<a class="btn btn-primary btn-sm" asp-action="Add" asp-route-id="@item.ProductId">+</a>
+					<a class="btn btn-danger btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
+				</td>
+				<td>@item.Price.ToString("C2")</td>
+				<td>@Model.CartItems.Where(x=>x.ProductId== item.ProductId).Sum(x=>x.Quantity * x.Price).ToString("C2")</td>
+			</tr>
+		}
+		<tr>
+			<td class="text-right" colspan="4">Suma do zapłaty: @Model.GrantTotal.ToString("C2")</td>
+		</tr>
+		<tr>
+			<td class="text-right" colspan="4">
+				<a class="btn btn-danger" asp-action="Clear">Wyczyść koszyk</a>
+				<a class="btn btn-primary" href="#">Zapłać</a>
+			</td>
+		</tr>
+	</table>
+}
+else
+{
+	<h1 class="display-4 text-center">Twój koszyk jest pusty</h1>
+}
+
