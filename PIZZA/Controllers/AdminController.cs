@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PIZZA.Models;
 using PIZZA.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PIZZA.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -64,7 +66,7 @@ namespace PIZZA.Controllers
 
             return View(product);
         }
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(long id)
         {
             Product product = await _context.Products.FindAsync(id);
 
