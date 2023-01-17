@@ -3,17 +3,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PIZZA.Models;
 using PIZZA.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 
-namespace PIZZA.Areas.Admin.Controllers
+namespace PIZZA.Controllers
 {
-    //[Authorize(Roles ="Admin")]
-    public class ProductsController : Controller
+    public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
-		private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public ProductsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public AdminController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -25,16 +23,16 @@ namespace PIZZA.Areas.Admin.Controllers
             ViewBag.PageRange = pageSize;
             ViewBag.TotalPages = (int)Math.Ceiling((decimal)_context.Products.Count() / pageSize);
             return View(await _context.Products.OrderByDescending(p => p.Id)
-                .Include(p=>p.Category)
+                .Include(p => p.Category)
                 .Skip((p - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync());
         }
-		public IActionResult Create()
-		{
+        public IActionResult Create()
+        {
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             return View();
-		}
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -46,8 +44,8 @@ namespace PIZZA.Areas.Admin.Controllers
             {
                 product.Slug = product.Name.ToLower().Replace(" ", "_");
 
-                var slug = await _context.Products.FirstOrDefaultAsync(p=> p.Slug == product.Slug);
-                if(slug != null)
+                var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
+                if (slug != null)
                 {
                     TempData["Error"] = "Produkt już istnieje w bazie!";
                     return View(product);
@@ -63,19 +61,21 @@ namespace PIZZA.Areas.Admin.Controllers
                 return RedirectToAction("Index");
 
             }
-            
+
             return View(product);
         }
-		public async Task<IActionResult> Edit(int id)
-		{
-            Product product= await _context.Products.FindAsync(id);
-			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-			return View(product);
-		}
+        public async Task<IActionResult> Edit(int id)
+        {
+            Product product = await _context.Products.FindAsync(id);
+
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+
+            return View(product);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Product product)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
