@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PIZZA.Models;
-using PIZZA.Infrastructure;
 
-namespace ShoppingCart.Infrastructure
+namespace PIZZA.Infrastructure
 {
     public class SeedData
     {

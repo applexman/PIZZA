@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PIZZA.Infrastructure;
-using ShoppingCart.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
