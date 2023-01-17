@@ -11,6 +11,7 @@ namespace PIZZA.Infrastructure
 
             if (!context.Products.Any())
             {
+
                 Category pizza = new Category { Name = "Pizza", Slug = "pizza" };
                 Category napoje = new Category { Name = "Napoje", Slug = "napoje" };
 

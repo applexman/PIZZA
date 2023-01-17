@@ -2,9 +2,11 @@
 using PIZZA.Models;
 using PIZZA.Infrastructure;
 using PIZZA.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PIZZA.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
