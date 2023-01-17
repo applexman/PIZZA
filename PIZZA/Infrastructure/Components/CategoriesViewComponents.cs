@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PIZZA.Models;
 using PIZZA.Infrastructure;
 
-namespace Pizzeria.Infrastructure.Components
+namespace PIZZA.Infrastructure.Components
 {
     public class CategoriesViewComponent : ViewComponent
     {

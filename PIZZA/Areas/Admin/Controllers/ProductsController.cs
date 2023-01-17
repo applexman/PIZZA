@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PIZZA.Models;
 using PIZZA.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PIZZA.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -40,10 +42,10 @@ namespace PIZZA.Areas.Admin.Controllers
         public async Task<IActionResult> Create(Product product)
         {
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-            
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                product.Slug=product.Name.ToLower().Replace(" ", "_");
+                product.Slug = product.Name.ToLower().Replace(" ", "_");
 
                 var slug = await _context.Products.FirstOrDefaultAsync(p=> p.Slug == product.Slug);
                 if(slug != null)

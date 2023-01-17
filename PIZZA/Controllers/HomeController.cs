@@ -3,7 +3,7 @@ using PIZZA.Models;
 using PIZZA.Infrastructure;
 using System.Diagnostics;
 
-namespace Pizzeria.Controllers
+namespace PIZZA.Controllers
 {
     public class HomeController : Controller
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PIZZA.Infrastructure;
 using PIZZA.Models;
 
-namespace Pizzeria.Controllers
+namespace PIZZA.Controllers
 {
     public class ProductsController : Controller
 	{

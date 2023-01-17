@@ -3,7 +3,7 @@ using PIZZA.Models;
 using PIZZA.Infrastructure;
 using PIZZA.Models.ViewModels;
 
-namespace Pizzeria.Controllers
+namespace PIZZA.Controllers
 {
     public class CartController : Controller
     {

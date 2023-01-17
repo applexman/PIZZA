@@ -3,7 +3,7 @@ using PIZZA.Infrastructure;
 using PIZZA.Models;
 using PIZZA.Models.ViewModels;
 
-namespace Pizzeria.Infrastructure.Components
+namespace PIZZA.Infrastructure.Components
 {
     public class SmallCartViewComponent : ViewComponent
     {
