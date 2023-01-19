@@ -1,4 +1,7 @@
-﻿@model CartViewModel
+﻿@using Microsoft.AspNetCore.Identity;
+
+@model CartViewModel
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
 	ViewData["Title"] = "Twój koszyk";
@@ -36,7 +39,14 @@
 		<tr>
 			<td class="text-right" colspan="4">
 				<a class="btn btn-danger" asp-action="Clear">Wyczyść koszyk</a>
-				<a class="btn btn-primary" href="#">Zapłać</a>
+				@if (SignInManager.IsSignedIn(User))
+				{
+					<a class="btn btn-primary" href="#">Zapłać</a>
+				}
+				else
+				{
+					<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Zaloguj się zanim zamówisz</a>
+				}
 			</td>
 		</tr>
 	</table>
