@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PIZZA.Models;
 using PIZZA.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
+using PIZZA.Models;
 
 namespace PIZZA.Controllers
 {
@@ -59,7 +58,7 @@ namespace PIZZA.Controllers
                     ModelState.AddModelError("", "Nie udało się dodać produktu. Spróbuj ponownie później.");
                 }
 
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
 
             }
 

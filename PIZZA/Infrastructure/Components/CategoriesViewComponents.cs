@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PIZZA.Models;
-using PIZZA.Infrastructure;
 
 namespace PIZZA.Infrastructure.Components
 {

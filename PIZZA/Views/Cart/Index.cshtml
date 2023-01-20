@@ -4,96 +4,94 @@
 @inject SignInManager<IdentityUser> SignInManager
 
 @{
-	ViewData["Title"] = "Twój koszyk";
+    ViewData["Title"] = "Twój koszyk";
 }
 
 
-@if(Model.CartItems.Count>0)
+@if (Model.CartItems.Count > 0)
 {
-	<h1 class="text-center">Twój koszyk: </h1>
-	<table class="table">
-		<tr>
-			<th>Produkt</th>
-			<th>Ilość</th>
-			<th></th>
-			<th>Cena</th>
-			<th>Suma</th>
-		</tr>
-		@foreach(var item in Model.CartItems)
-		{
-			<tr>
-				<td>@item.ProductName</td>
-				<td>@item.Quantity</td>
-				<td>
-					<a class="btn btn-primary btn-sm" asp-action="Add" asp-route-id="@item.ProductId">+</a>
-					<a class="btn btn-danger btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
-				</td>
-				<td>@item.Price.ToString("C2")</td>
-				<td>@Model.CartItems.Where(x=>x.ProductId== item.ProductId).Sum(x=>x.Quantity * x.Price).ToString("C2")</td>
-			</tr>
-		}
-		<tr>
-			<td class="text-right" colspan="4">Suma do zapłaty: @Model.GrantTotal.ToString("C2")</td>
-		</tr>
-		<tr>
-			<td class="text-right" colspan="4">
-				<a class="btn btn-danger" asp-action="Clear">Wyczyść koszyk</a>
-				@if (SignInManager.IsSignedIn(User))
-				{
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <div>
-                            <h2>Adres dostawy</h2>
-                            <form asp-action="Checkout">
-                                <div class="form-group">
-                                    <label asp-for="FirstName">Imię</label>
-                                    <input asp-for="FirstName" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LastName">Nazwisko</label>
-                                    <input asp-for="LastName" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Address">Adres</label>
-                                    <input asp-for="Address" class="form-control" />
-                                    <span asp-validation-for="Address" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="City">Miasto</label>
-                                    <input asp-for="City" class="form-control" />
-                                    <span asp-validation-for="City" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="PostCode">Kod pocztowy</label>
-                                    <input asp-for="PostCode" class="form-control" />
-                                    <span asp-validation-for="PostCode" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="PhoneNumber">Numer telefonu</label>
-                                    <input asp-for="PhoneNumber" class="form-control" />
-                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Email">E-mail</label>
-                                    <input asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Zamów</button>
-                            </form>
+    <h1 class="text-center">Twój koszyk: </h1>
+    <table class="table">
+        <tr>
+            <th>Produkt</th>
+            <th>Ilość</th>
+            <th></th>
+            <th>Cena</th>
+            <th>Suma</th>
+        </tr>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Add" asp-route-id="@item.ProductId">+</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
+                </td>
+                <td>@item.Price.ToString("C2")</td>
+                <td>@Model.CartItems.Where(x=>x.ProductId== item.ProductId).Sum(x=>x.Quantity * x.Price).ToString("C2")</td>
+            </tr>
+        }
+        <tr>
+            <td class="text-right" colspan="4">Suma do zapłaty: @Model.GrantTotal.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td class="text-right" colspan="4">
+                <a class="btn btn-danger" asp-action="Clear">Wyczyść koszyk</a>
+                <br />
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form class="row g-3 needs-validation" novalidate asp-action="Checkout">
+                        <h2>Adres dostawy</h2>
+                        <div class="col-md-4">
+                            <label asp-for="FirstName">Imię</label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
-                    }
-				}
-				else
-				{
-					<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Zaloguj się zanim zamówisz</a>
-				}
-			</td>
-		</tr>
-	</table>
+                        <div class="col-md-4">
+                            <label asp-for="LastName">Nazwisko</label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Address">Adres</label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="City">Miasto</label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="PostCode">Kod pocztowy</label>
+                            <input asp-for="PostCode" class="form-control" />
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="PhoneNumber">Numer telefonu</label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Email">E-mail</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Zamów</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Zaloguj się zanim zamówisz</a>
+                }
+            </td>
+        </tr>
+    </table>
 }
 else
 {
-	<h1 class="display-4 text-center">Twój koszyk jest pusty</h1>
+    <h1 class="display-4 text-center">Twój koszyk jest pusty</h1>
 }

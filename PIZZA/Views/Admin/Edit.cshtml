@@ -6,49 +6,49 @@
 <div class="row d-flex justify-content-center">
     <div class="text-center d-flex flex-column align-items-center">
         <h1>Edytuj produkt do sklepu</h1>
-                <form asp-action="Edit" enctype="multipart/form-data" class="">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Edit" enctype="multipart/form-data" class="">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group">
-                        <h4>Grafika</h4>
-                        <img src="/media/products/@Model.Image" width="200" height="200"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label">Nazwa</label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label">Opis produktu</label>
-                        <textarea asp-for="Description" class="form-control"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Price" class="control-label">Cena produktu</label>
-                        <input asp-for="Price" class="form-control" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Kategorie</label>
-                        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
-                            <option value="0">Wybierz kategorię</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <br />
-                        <button class="btn btn-primary shadow">Edytuj</button>
-                    </div>
-                </form>
-                
-            <div>
-                <br>
-                <a asp-action="Index" class="btn btn-primary shadow">Wróć do listy</a>
+            <div class="form-group">
+                <h4>Grafika</h4>
+                <img src="/media/products/@Model.Image" width="200" height="200" />
             </div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nazwa</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Opis produktu</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Cena produktu</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Kategorie</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                    <option value="0">Wybierz kategorię</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br />
+                <button class="btn btn-primary shadow">Edytuj</button>
+            </div>
+        </form>
+
+        <div>
+            <br>
+            <a asp-action="Index" class="btn btn-primary shadow">Wróć do listy</a>
+        </div>
     </div>
 </div>
 

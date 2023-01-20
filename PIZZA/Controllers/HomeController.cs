@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PIZZA.Models;
-using PIZZA.Infrastructure;
 using System.Diagnostics;
 
 namespace PIZZA.Controllers
