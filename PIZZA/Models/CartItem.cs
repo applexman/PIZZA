@@ -1,7 +1,10 @@
-﻿namespace PIZZA.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PIZZA.Models
 {
     public class CartItem
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
@@ -11,6 +14,10 @@
             get { return Quantity * Price; }
         }
         public string Image { get; set; }
+
+        [ForeignKey("OrderId")]
+        public Order Order { get; set; }
+        public int OrderId { get; set; }
 
         public CartItem()
         {

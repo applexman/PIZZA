@@ -1,3 +1,4 @@
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PIZZA.Infrastructure;
@@ -45,9 +46,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapControllerRoute(
-//    name: "Areas",
-//    pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "Areas",
+    pattern: "{area:exists}/{controller=Products}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "products",
