@@ -17,6 +17,10 @@ namespace PIZZA.Infrastructure
         public DbSet<CartItem> CartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
             modelBuilder.Entity<CartItem>()
                 .HasOne(ci => ci.Order)
                 .WithMany(o => o.CartItems)

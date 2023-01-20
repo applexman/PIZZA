@@ -9,7 +9,8 @@ namespace PIZZA.Models
     public class Order
     {
         public int Id { get; set; }
-        public string OrderNumber { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string OrderNumber { get; set; } = Guid.NewGuid().ToString();
         public decimal Total { get; set; }
         public string UserId { get; set; }
         public string FirstName { get; set; }

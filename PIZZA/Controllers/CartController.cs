@@ -3,6 +3,7 @@ using PIZZA.Models;
 using PIZZA.Infrastructure;
 using PIZZA.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace PIZZA.Controllers
 {
@@ -13,16 +14,18 @@ namespace PIZZA.Controllers
         public CartController(ApplicationDbContext context)
         {
             _context = context;
+
         }
         public IActionResult Index()
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart")?? new List<CartItem>();
 
-            CartViewModel cartVM = new()
+            CartViewModel cartVM = new CartViewModel
             {
                 CartItems = cart,
                 GrantTotal = cart.Sum(x => x.Quantity * x.Price)
             };
+
 
             return View(cartVM);
         }
@@ -86,5 +89,31 @@ namespace PIZZA.Controllers
 
 			return RedirectToAction("Index");
 		}
-	}
+        [HttpPost]
+        public IActionResult Checkout(Order order)
+        {
+
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+            if (cart.Count == 0)
+            {
+                TempData["Error"] = "Twój koszyk jest pusty, nie można dokonać zamówienia.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            order.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            order.OrderDate = DateTime.Now;
+            order.Total = cart.Sum(x => x.Quantity * x.Price);
+            order.CartItems = cart;
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            HttpContext.Session.Remove("Cart");
+
+            TempData["Success"] = "Twoje zamówienie zostało złożone!";
+            return RedirectToAction("Index", "Home");
+        }
+
+    }
 }

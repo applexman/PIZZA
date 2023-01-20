@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PIZZA.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -50,11 +50,16 @@ namespace PIZZA.Controllers
                 product.Image = "soon.png";
 
                 _context.Add(product);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Nie udało się dodać produktu. Spróbuj ponownie później.");
+                }
 
-                TempData["Success"] = "Produkt został pomyślnie stworzony!";
-
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
 
             }
 
