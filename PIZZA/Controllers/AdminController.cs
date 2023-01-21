@@ -11,12 +11,10 @@ namespace PIZZA.Controllers
 	public class AdminController : Controller
 	{
 		private readonly ApplicationDbContext _context;
-		private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public AdminController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+		public AdminController(ApplicationDbContext context)
 		{
 			_context = context;
-			_webHostEnvironment = webHostEnvironment;
 		}
 		public async Task<IActionResult> Index(int p = 1)
 		{
@@ -31,7 +29,6 @@ namespace PIZZA.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(Product product)
 		{
 			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
@@ -75,7 +72,6 @@ namespace PIZZA.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, Product product)
 		{
 			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
