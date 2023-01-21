@@ -4,7 +4,7 @@
 		@foreach(var item in Model)
 		{
 			<li>
-			<a class="btn btn-primary shadow" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Name</a>
+			<a class="btn btn-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Name</a>
 			</li>
 		}
 	</ol>
