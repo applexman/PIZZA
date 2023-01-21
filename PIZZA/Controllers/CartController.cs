@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PIZZA.Infrastructure;
 using PIZZA.Models;
 using PIZZA.Models.ViewModels;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace PIZZA.Controllers
 {
+
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -89,6 +91,7 @@ namespace PIZZA.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Checkout(Order order)
         {
 
@@ -110,9 +113,8 @@ namespace PIZZA.Controllers
 
             HttpContext.Session.Remove("Cart");
 
-            TempData["Success"] = "Twoje zamówienie zostało złożone!";
+            TempData["Success"] = "Twoje zamówienie zostało złożone! Numer Twojego zamówienia to: " + order.OrderNumber;
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

@@ -43,10 +43,6 @@
             <th>
                 Suma
             </th>
-            <th>
-                Identyfikator użytkownika
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -85,18 +81,13 @@
                     {
                         @Html.DisplayFor(cartItemModel => cartItem.ProductName)
                         @: *
-                        @Html.DisplayFor(cartItemModel => cartItem.Quantity);
+                        @Html.DisplayFor(cartItemModel => cartItem.Quantity)
+                        ;
                         <br />
                     }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-                </td>
-                <td>
-                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
                 </td>
             </tr>
         }

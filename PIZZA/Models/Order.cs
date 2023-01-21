@@ -18,19 +18,9 @@ namespace PIZZA.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public DateTime OrderDate { get; set; }
-        public OrderStatus Status { get; set; }
 
         [ForeignKey("UserId")]
         public IdentityUser IdentityUser { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
-    }
-
-    public enum OrderStatus
-    {
-        Zlecone,
-        Tworzone,
-        Transportowane,
-        Dostarczone,
-        Anulowane
     }
 }

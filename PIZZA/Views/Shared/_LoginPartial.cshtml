@@ -5,10 +5,16 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        <li class="nav-item">
+            <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Index">Twoje zamówienia</a>
+        </li>
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="btn btn-primary" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Admin" asp-action="Index">Panel Admina</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-primary" asp-area="" asp-controller="Worker" asp-action="Index">Zamówienia</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Dane Administratora</a>
@@ -16,9 +22,21 @@
         }
         else
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Witaj @User.Identity?.Name!</a>
-            </li>
+            if (User.IsInRole("Employee"))
+            {
+                <li class="nav-item">
+                    <a class="btn btn-primary" asp-area="" asp-controller="Worker" asp-action="Index">Zamówienia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Dane pracownika</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Witaj @User.Identity?.Name!</a>
+                </li>
+            }
         }
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
