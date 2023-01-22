@@ -4,23 +4,23 @@
 
 namespace PIZZA.Data.Migrations
 {
-    public partial class czwarta : Migration
+    public partial class piata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Status",
-                table: "Orders");
+                name: "Slug",
+                table: "Products");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Status",
-                table: "Orders",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "Slug",
+                table: "Products",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
     }
 }

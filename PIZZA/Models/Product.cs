@@ -11,8 +11,6 @@ namespace PIZZA.Models
 		[Required(ErrorMessage = "Wpisz nazwę")]
 		public string Name { get; set; }
 
-		public string Slug { get; set; }
-
 		public string? Description { get; set; }
 
 		[Required]

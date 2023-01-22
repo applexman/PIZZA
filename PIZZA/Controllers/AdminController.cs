@@ -7,104 +7,78 @@ using PIZZA.Models;
 
 namespace PIZZA.Controllers
 {
-	[Authorize(Roles = "Admin")]
-	public class AdminController : Controller
-	{
-		private readonly ApplicationDbContext _context;
+    [Authorize(Roles = "Admin")]
+    public class AdminController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-		public AdminController(ApplicationDbContext context)
-		{
-			_context = context;
-		}
-		public async Task<IActionResult> Index(int p = 1)
-		{
-			return View(await _context.Products.OrderBy(p => p.Id)
-				.Include(p => p.Category)
-				.ToListAsync());
-		}
-		public IActionResult Create()
-		{
-			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
-			return View();
-		}
+        public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Products
+                .Include(p => p.Category)
+                .ToListAsync());
+        }
+        public IActionResult Create()
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            return View();
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> Create(Product product)
-		{
-			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+        [HttpPost]
+        public async Task<IActionResult> Create(Product product)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-			if (ModelState.IsValid)
-			{
-				product.Slug = product.Name.ToLower().Replace(" ", "_");
 
-				var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
-				if (slug != null)
-				{
-					TempData["Error"] = "Produkt już istnieje w bazie!";
-					return View(product);
-				}
+            product.Image = "soon.png";
 
-				product.Image = "soon.png";
+            _context.Add(product);
 
-				_context.Add(product);
-				try
-				{
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateException)
-				{
-					ModelState.AddModelError("", "Nie udało się dodać produktu. Spróbuj ponownie później.");
-				}
+            await _context.SaveChangesAsync();
 
-				return RedirectToAction("Index");
 
-			}
+            return RedirectToAction("Index");
 
-			return View(product);
-		}
-		public async Task<IActionResult> Edit(int id)
-		{
-			Product product = await _context.Products.FindAsync(id);
 
-			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-			return View(product);
-		}
+            return View(product);
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+            Product product = await _context.Products.FindAsync(id);
 
-		[HttpPost]
-		public async Task<IActionResult> Edit(int id, Product product)
-		{
-			ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-			if (ModelState.IsValid)
-			{
-				product.Slug = product.Name.ToLower().Replace(" ", "-");
+            return View(product);
+        }
 
-				var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
-				if (slug != null)
-				{
-					TempData["Error"] = "Produkt już istnieje w bazie!";
-					return View(product);
-				}
-				_context.Update(product);
-				await _context.SaveChangesAsync();
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Product product)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-				TempData["Success"] = "Produkt został pomyślnie zmieniony!";
-			}
+            _context.Update(product);
+            await _context.SaveChangesAsync();
 
-			return View(product);
-		}
+            TempData["Success"] = "Produkt został pomyślnie zmieniony!";
 
-		public async Task<IActionResult> Delete(int id)
-		{
-			Product product = await _context.Products.FindAsync(id);
+            return View(product);
+        }
 
-			_context.Products.Remove(product);
-			await _context.SaveChangesAsync();
+        public async Task<IActionResult> Delete(int id)
+        {
+            Product product = await _context.Products.FindAsync(id);
 
-			TempData["Success"] = "Produkt został pomyślnie usunięty!";
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
 
-			return RedirectToAction("Index");
-		}
-	}
+            TempData["Success"] = "Produkt został pomyślnie usunięty!";
+
+            return RedirectToAction("Index");
+        }
+    }
 }
