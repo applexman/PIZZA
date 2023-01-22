@@ -7,7 +7,7 @@ using PIZZA.Models;
 
 namespace PIZZA.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -74,7 +74,7 @@ namespace PIZZA.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Produkt został pomyślnie usunięty!";
+            TempData["Success"] = "Produkt "+product.Name+" został pomyślnie usunięty!";
 
             return RedirectToAction("Index");
         }
