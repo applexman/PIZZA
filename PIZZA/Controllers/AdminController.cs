@@ -40,12 +40,10 @@ namespace PIZZA.Controllers
 
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Produkt "+product.Name+" został pomyślnie stworzony!";
 
             return RedirectToAction("Index");
-
-
-
-            return View(product);
+            
         }
         public async Task<IActionResult> Edit(int id)
         {
@@ -64,9 +62,9 @@ namespace PIZZA.Controllers
             _context.Update(product);
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Produkt został pomyślnie zmieniony!";
+            TempData["Success"] = "Produkt "+product.Name+" został pomyślnie zmieniony!";
 
-            return View(product);
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
